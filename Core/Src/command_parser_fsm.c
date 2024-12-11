@@ -3,7 +3,7 @@
 
 void command_parse_fsm (void) {
 	switch (command_parse_state) {
-		case IDLE:
+		case WAIT_FOR_TYPING:
 			// do nothing
 			if (strstr(buffer, "!RST#") != NULL) {
 				command_parse_state = RST;
@@ -20,7 +20,7 @@ void command_parse_fsm (void) {
 			command_flag = 1;
 			memset(buffer, 0, sizeof(buffer));
 			index_buffer = 0;
-			command_parse_state = IDLE;
+			command_parse_state = WAIT_FOR_TYPING;
 
 			break;
 		case OK:
@@ -29,7 +29,7 @@ void command_parse_fsm (void) {
 			memset(buffer, 0, sizeof(buffer));
 			index_buffer = 0;
 
-			command_parse_state = IDLE;
+			command_parse_state = WAIT_FOR_TYPING;
 
 			break;
 	}
