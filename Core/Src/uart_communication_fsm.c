@@ -16,10 +16,11 @@ void uart_communication_fsm(void){
 			case SEND_DATA_1:
 
 				// send data
+				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
 				HAL_ADC_Start(&hadc1);
 				ADC_value = HAL_ADC_GetValue(&hadc1);
 
-				sprintf ((char *)str , "\r\n%ld\r\n", ADC_value);
+				sprintf ((char *)str , "\r\n!ADC=%ld#\r\n", ADC_value);
 				HAL_UART_Transmit (&huart2 , str , sizeof(str), 1000);
 				setTimer(3000);
 				uart_communication_state = HANDLE2;
@@ -41,7 +42,8 @@ void uart_communication_fsm(void){
 
 				break;
 			case SEND_DATA_2:
-				sprintf ((char *)str , "\r\n%ld\r\n", ADC_value);
+				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
+				sprintf ((char *)str , "\r\n!ADC=%ld#\r\n", ADC_value);
 				HAL_UART_Transmit (&huart2 , str , sizeof(str), 1000);
 				setTimer(3000);
 				uart_communication_state = HANDLE2;
